@@ -17,16 +17,6 @@ positions = [
     (5, 4), (7, 4)                       # Backend and database
 ]
 
-# Create node scatter plot
-node_trace = go.Scatter(
-    x=[pos[0] for pos in positions],
-    y=[pos[1] for pos in positions],
-    mode='markers+text',
-    marker=dict(size=30, color='lightblue', line=dict(width=2, color='black')),
-    text=nodes,
-    textposition="bottom center"
-)
-
 # Define edges (arrows between nodes)
 edges = [
     (0, 1), (1, 2), (2, 3),             # User interaction
@@ -38,32 +28,100 @@ edges = [
     (15, 16), (16, 15), (11, 14),      # Database and wallet
     (14, 13), (13, 12)                 # Blockchain integration
 ]
-edge_traces = []
-for start, end in edges:
-    edge_traces.append(go.Scatter(
+
+# Build animation frames
+frames = []
+for idx, (start, end) in enumerate(edges):
+    # Highlight the current edge and its nodes
+    edge_trace = go.Scatter(
         x=[positions[start][0], positions[end][0]],
         y=[positions[start][1], positions[end][1]],
         mode='lines+markers',
-        line=dict(width=3, color='gray', dash="solid"),
+        line=dict(width=4, color='gold'),
         hoverinfo='none'
-    ))
+    )
+    node_trace = go.Scatter(
+        x=[positions[start][0], positions[end][0]],
+        y=[positions[start][1], positions[end][1]],
+        mode='markers+text',
+        marker=dict(size=[40, 30], color=['green', 'lightblue']),
+        text=[nodes[start], nodes[end]],
+        textposition="bottom center"
+    )
+    frames.append(go.Frame(data=[edge_trace, node_trace], name=f"frame{idx}"))
 
-# Combine all traces
-fig = go.Figure([node_trace] + edge_traces)
+# Static base traces
+static_edges = [
+    go.Scatter(
+        x=[positions[start][0], positions[end][0]],
+        y=[positions[start][1], positions[end][1]],
+        mode='lines',
+        line=dict(width=2, color='gray'),
+        hoverinfo='none'
+    ) for start, end in edges
+]
 
-# Customize layout
-fig.update_layout(
-    title="Expanded Interactive Data Flow Diagram with Onboarding",
-    title_font=dict(size=24),
-    xaxis=dict(showgrid=False, zeroline=False, visible=False),
-    yaxis=dict(showgrid=False, zeroline=False, visible=False),
-    showlegend=False,
-    plot_bgcolor="white"
+static_nodes = go.Scatter(
+    x=[pos[0] for pos in positions],
+    y=[pos[1] for pos in positions],
+    mode='markers+text',
+    marker=dict(size=30, color='lightblue', line=dict(width=2, color='black')),
+    text=nodes,
+    hovertext=[
+        "User interaction", "Handles login", "Displays dashboard", "Manages onboarding process",
+        "Admin onboarding", "Engineer onboarding", "Customer onboarding",
+        "Task creation process", "AI-driven task matching", "Engineer task response",
+        "Real-time dispatch system", "Payment processing gateway", "Feedback collection",
+        "Blockchain for transparency", "Digital wallet for payments", "API service", "Database storage"
+    ],
+    hoverinfo="text",
+    textposition="bottom center"
 )
 
-# Export to PNG and HTML
-fig.write_image("expanded_data_flow_with_onboarding.png")
-fig.write_html("expanded_data_flow_with_onboarding.html")
+# Create figure with animation frames
+fig = go.Figure(
+    data=[*static_edges, static_nodes],
+    layout=go.Layout(
+        title="Enhanced Animated Data Flow Diagram with Illuminated Flow",
+        title_font=dict(size=24),
+        xaxis=dict(showgrid=False, zeroline=False, visible=False),
+        yaxis=dict(showgrid=False, zeroline=False, visible=False),
+        showlegend=False,
+        plot_bgcolor="white",
+        updatemenus=[{
+            "buttons": [
+                {
+                    "args": [None, {"frame": {"duration": 1000, "redraw": True}, "fromcurrent": True}],
+                    "label": "Play",
+                    "method": "animate"
+                },
+                {
+                    "args": [[None], {"frame": {"duration": 0, "redraw": True}, "mode": "immediate", "transition": {"duration": 0}}],
+                    "label": "Pause",
+                    "method": "animate"
+                }
+            ],
+            "direction": "left",
+            "pad": {"r": 10, "t": 87},
+            "showactive": False,
+            "type": "buttons",
+            "x": 0.1,
+            "xanchor": "right",
+            "y": 0,
+            "yanchor": "top"
+        }]
+    ),
+    frames=frames
+)
 
-# Display the diagram
+# Add easing for smooth transitions
+fig.update_layout(
+    transition=dict(duration=500, easing="sin-in-out")  # Correct easing value
+)
+
+# Export to HTML for interactive sharing
+fig.write_html("enhanced_animated_data_flow.html")
+
+# Display animated figure
 fig.show()
+
