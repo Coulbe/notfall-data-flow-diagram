@@ -82,7 +82,7 @@ static_nodes = go.Scatter(
 fig = go.Figure(
     data=[*static_edges, static_nodes],
     layout=go.Layout(
-        title="Enhanced Animated Data Flow Diagram with Illuminated Flow",
+        title="Animated Notfall Engineers On-Demand Data Flow with Illuminated Flow of Data",
         title_font=dict(size=24),
         xaxis=dict(showgrid=False, zeroline=False, visible=False),
         yaxis=dict(showgrid=False, zeroline=False, visible=False),
