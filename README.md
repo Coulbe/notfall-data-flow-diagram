@@ -10,3 +10,7 @@ This repository contains the Python code to generate an interactive and expanded
    ```bash
    git clone https://github.com/Coulbe/notfall-data-flow-diagram.git
    cd notfall-data-flow-diagram
+   pip install -r requirements.txt
+   python data_flow_diagram.py
+
+
