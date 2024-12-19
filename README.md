@@ -1,2 +1,12 @@
-# notfall-data-flow-diagram
-Expanded Interactive Data Flow Diagram for Notfall Engineers On-Demand System.
+# Notfall Data Flow Diagram
+This repository contains the Python code to generate an interactive and expanded data flow diagram for the Notfall Engineers On-Demand System.
+
+## Features
+- Visualizes key components such as onboarding, task matching, payment processing, and blockchain integration.
+- Generates outputs in PNG, HTML, and other formats.
+
+## How to Run
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Coulbe/notfall-data-flow-diagram.git
+   cd notfall-data-flow-diagram
