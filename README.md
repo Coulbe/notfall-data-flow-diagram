@@ -2,7 +2,7 @@
 This repository contains the Python code to generate an interactive and expanded data flow diagram for the Notfall Engineers On-Demand System.
 
 ## Features
-- Visualizes key components such as onboarding, task matching, payment processing, and blockchain integration.
+- Visualises key components such as onboarding, task matching, payment processing, and blockchain integration.
 - Generates outputs in PNG, HTML, and other formats.
 
 ## How to Run
