@@ -102,7 +102,7 @@ fig = go.Figure(
         updatemenus=[{
             "buttons": [
                 {
-                    "args": [None, {"frame": {"duration": 1000, "redraw": True}, "fromcurrent": True}],
+                    "args": [None, {"frame": {"duration": 2000, "redraw": True}, "fromcurrent": True}],  # Slower frame speed
                     "label": "Play",
                     "method": "animate"
                 },
@@ -127,11 +127,11 @@ fig = go.Figure(
 
 # Add easing for smooth transitions
 fig.update_layout(
-    transition=dict(duration=500, easing="sin-in-out")
+    transition=dict(duration=1500, easing="cubic-in-out")  # Slower easing
 )
 
 # Export to HTML for interactive sharing
-fig.write_html("enhanced_animated_data_flow_with_feedback.html")
+fig.write_html("enhanced_animated_data_flow_with_feedback_slow.html")
 
 # Display animated figure
 fig.show()
